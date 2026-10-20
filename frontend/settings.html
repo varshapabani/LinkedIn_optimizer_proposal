@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | AI Mentor for LinkedIn</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f6f8fc;
+            color: #172033;
+        }
+
+        /* ================= TOP BAR ================= */
+
+        .topbar {
+            height: 76px;
+            background: #0b1f3a;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 45px;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            font-size: 20px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+
+            background: #2563eb;
+            border-radius: 9px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* ================= NAVIGATION ================= */
+
+        .navigation {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navigation a {
+            color: #dbe5f3;
+            text-decoration: none;
+
+            padding: 11px 14px;
+            border-radius: 8px;
+
+            font-size: 14px;
+            font-weight: 500;
+
+            transition: 0.2s;
+        }
+
+        .navigation a:hover {
+            background: #17365f;
+            color: white;
+        }
+
+        .navigation a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .navigation a.logout {
+            color: #f1b5b5;
+        }
+
+        .navigation a.logout:hover {
+            background: #5a2020;
+            color: white;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            max-width: 1050px;
+            margin: auto;
+            padding: 45px 30px 70px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            color: #0b1f3a;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #697386;
+            font-size: 15px;
+        }
+
+        /* ================= CARD ================= */
+
+        .settings-card {
+            background: white;
+            border: 1px solid #e4e8ef;
+            border-radius: 14px;
+
+            margin-bottom: 22px;
+
+            box-shadow: 0 5px 18px rgba(11, 31, 58, 0.04);
+
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 22px 26px;
+
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .section-header h2 {
+            color: #0b1f3a;
+            font-size: 17px;
+            margin-bottom: 5px;
+        }
+
+        .section-header p {
+            color: #7a8495;
+            font-size: 13px;
+        }
+
+        .section-body {
+            padding: 26px;
+        }
+
+        /* ================= ACCOUNT PROFILE ================= */
+
+        .account-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .profile-picture {
+            width: 68px;
+            height: 68px;
+
+            border-radius: 50%;
+
+            background: #eaf1ff;
+            color: #2563eb;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .profile-details h3 {
+            color: #172033;
+            font-size: 17px;
+            margin-bottom: 5px;
+        }
+
+        .profile-details p {
+            color: #7a8495;
+            font-size: 13px;
+        }
+
+        .edit-profile {
+            padding: 10px 17px;
+
+            background: white;
+            color: #2563eb;
+
+            border: 1px solid #cdd9ed;
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .edit-profile:hover {
+            background: #f4f7ff;
+        }
+
+        /* ================= INFORMATION GRID ================= */
+
+        .information-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            gap: 22px 30px;
+        }
+
+        .information-item {
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .information-item label {
+            display: block;
+
+            color: #7a8495;
+
+            font-size: 11px;
+            font-weight: 600;
+
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+
+            margin-bottom: 7px;
+        }
+
+        .information-item p {
+            color: #263247;
+            font-size: 14px;
+        }
+
+        /* ================= SECURITY ================= */
+
+        .security-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 18px 0;
+
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .security-row:first-child {
+            padding-top: 0;
+        }
+
+        .security-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .security-info h3 {
+            font-size: 14px;
+            color: #172033;
+            margin-bottom: 5px;
+        }
+
+        .security-info p {
+            font-size: 12px;
+            color: #7a8495;
+        }
+
+        .outline-button {
+            padding: 9px 15px;
+
+            background: white;
+            color: #344054;
+
+            border: 1px solid #d6dce5;
+            border-radius: 7px;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .outline-button:hover {
+            background: #f7f8fa;
+        }
+
+        /* ================= PREFERENCES ================= */
+
+        .preference-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 18px 0;
+
+            border-bottom: 1px solid #edf0f4;
+
+            gap: 20px;
+        }
+
+        .preference-row:first-child {
+            padding-top: 0;
+        }
+
+        .preference-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .preference-info h3 {
+            font-size: 14px;
+            color: #172033;
+            margin-bottom: 5px;
+        }
+
+        .preference-info p {
+            font-size: 12px;
+            color: #7a8495;
+            line-height: 1.5;
+        }
+
+        .preference-control select {
+            width: 190px;
+
+            padding: 10px 12px;
+
+            border: 1px solid #d9dee7;
+            border-radius: 8px;
+
+            background: white;
+
+            font-size: 13px;
+            color: #344054;
+
+            outline: none;
+        }
+
+        .preference-control select:focus {
+            border-color: #2563eb;
+        }
+
+        /* ================= TOGGLE ================= */
+
+        .toggle {
+            position: relative;
+
+            width: 45px;
+            height: 24px;
+
+            flex-shrink: 0;
+        }
+
+        .toggle input {
+            display: none;
+        }
+
+        .toggle-slider {
+            position: absolute;
+
+            inset: 0;
+
+            background: #d8dde6;
+
+            border-radius: 20px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .toggle-slider::before {
+            content: "";
+
+            position: absolute;
+
+            width: 18px;
+            height: 18px;
+
+            left: 3px;
+            top: 3px;
+
+            background: white;
+
+            border-radius: 50%;
+
+            transition: 0.2s;
+
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle input:checked + .toggle-slider {
+            background: #2563eb;
+        }
+
+        .toggle input:checked + .toggle-slider::before {
+            transform: translateX(21px);
+        }
+
+        /* ================= LINKEDIN ================= */
+
+        .connection-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 18px;
+
+            border: 1px solid #e1e6ee;
+            border-radius: 10px;
+
+            background: #fafbfc;
+        }
+
+        .connection-info {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .linkedin-icon {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 8px;
+
+            background: #e8f1ff;
+            color: #2563eb;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .connection-info h3 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .connection-info p {
+            font-size: 12px;
+            color: #7a8495;
+        }
+
+        .connected {
+            color: #17835b;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* ================= ACCOUNT ACTIONS ================= */
+
+        .account-action {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 18px 0;
+
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .account-action:first-child {
+            padding-top: 0;
+        }
+
+        .account-action:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .account-action h3 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .account-action p {
+            font-size: 12px;
+            color: #7a8495;
+        }
+
+        .danger-button {
+            padding: 9px 15px;
+
+            background: #fff4f4;
+            color: #c0392b;
+
+            border: 1px solid #f0cccc;
+
+            border-radius: 7px;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .danger-button:hover {
+            background: #ffeaea;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1000px) {
+
+            .topbar {
+                padding: 0 25px;
+            }
+
+            .navigation {
+                gap: 2px;
+            }
+
+            .navigation a {
+                padding: 10px 9px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .topbar {
+                height: auto;
+                padding: 15px 20px;
+
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .navigation {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .main {
+                padding: 30px 20px 50px;
+            }
+
+            .account-top {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .information-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .preference-row,
+            .security-row {
+                align-items: flex-start;
+            }
+
+            .preference-control select {
+                width: 150px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .navigation a {
+                font-size: 12px;
+                padding: 8px 7px;
+            }
+
+            .page-header h1 {
+                font-size: 25px;
+            }
+
+            .section-body {
+                padding: 20px;
+            }
+
+            .preference-row,
+            .security-row,
+            .account-action {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .preference-control,
+            .preference-control select {
+                width: 100%;
+            }
+
+            .connection-box {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= TOP NAVIGATION ================= -->
+
+    <header class="topbar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                AI
+            </div>
+
+            <span>AI Mentor for LinkedIn</span>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <a href="profile.html">
+                My Profile
+            </a>
+
+            <a href="linkedin-analysis.html">
+                LinkedIn Analysis
+            </a>
+
+            <a href="ai-mentor.html">
+                AI Mentor
+            </a>
+
+            <a href="settings.html" class="active">
+                Settings
+            </a>
+
+            <a href="index.html" class="logout">
+                Logout
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <h1>Settings</h1>
+
+            <p>
+                Manage your account, security and AI Mentor preferences.
+            </p>
+
+        </div>
+
+
+        <!-- ================= ACCOUNT INFORMATION ================= -->
+
+        <section class="settings-card">
+
+            <div class="section-header">
+
+                <h2>Account Information</h2>
+
+                <p>
+                    Review and manage your personal account information.
+                </p>
+
+            </div>
+
+
+            <div class="section-body">
+
+
+                <div class="account-top">
+
+                    <div class="profile-info">
+
+                        <div class="profile-picture">
+                            FZ
+                        </div>
+
+                        <div class="profile-details">
+
+                            <h3>Fatima Zehra</h3>
+
+                            <p>
+                                AI Mentor for LinkedIn account
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <a href="profile.html" class="edit-profile">
+                        Edit Profile
+                    </a>
+
+                </div>
+
+
+                <div class="information-grid">
+
+                    <div class="information-item">
+
+                        <label>Full Name</label>
+
+                        <p>Fatima Zehra</p>
+
+                    </div>
+
+
+                    <div class="information-item">
+
+                        <label>Email Address</label>
+
+                        <p>fatima@example.com</p>
+
+                    </div>
+
+
+                    <div class="information-item">
+
+                        <label>Username</label>
+
+                        <p>fatimazehra</p>
+
+                    </div>
+
+
+                    <div class="information-item">
+
+                        <label>Contact Number</label>
+
+                        <p>+92 300 0000000</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= SECURITY ================= -->
+
+        <section class="settings-card">
+
+            <div class="section-header">
+
+                <h2>Security</h2>
+
+                <p>
+                    Manage your account password and security.
+                </p>
+
+            </div>
+
+
+            <div class="section-body">
+
+                <div class="security-row">
+
+                    <div class="security-info">
+
+                        <h3>Password</h3>
+
+                        <p>
+                            Your password was last updated recently.
+                        </p>
+
+                    </div>
+
+
+                    <button class="outline-button">
+                        Change Password
+                    </button>
+
+                </div>
+
+
+                <div class="security-row">
+
+                    <div class="security-info">
+
+                        <h3>Account Protection</h3>
+
+                        <p>
+                            Your account security settings are currently active.
+                        </p>
+
+                    </div>
+
+
+                    <span class="connected">
+                        Protected
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= AI MENTOR ================= -->
+
+        <section class="settings-card">
+
+            <div class="section-header">
+
+                <h2>AI Mentor Preferences</h2>
+
+                <p>
+                    Customize how your AI Mentor provides guidance.
+                </p>
+
+            </div>
+
+
+            <div class="section-body">
+
+
+                <div class="preference-row">
+
+                    <div class="preference-info">
+
+                        <h3>Guidance Focus</h3>
+
+                        <p>
+                            Select the area you want the AI Mentor to prioritize.
+                        </p>
+
+                    </div>
+
+
+                    <div class="preference-control">
+
+                        <select>
+
+                            <option>LinkedIn Optimization</option>
+                            <option>Upwork Proposals</option>
+                            <option>Career Development</option>
+                            <option>Skills Improvement</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="preference-row">
+
+                    <div class="preference-info">
+
+                        <h3>Guidance Style</h3>
+
+                        <p>
+                            Select how you prefer to receive AI guidance.
+                        </p>
+
+                    </div>
+
+
+                    <div class="preference-control">
+
+                        <select>
+
+                            <option>Short & Direct</option>
+                            <option>Detailed & Step-by-Step</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="preference-row">
+
+                    <div class="preference-info">
+
+                        <h3>Personalized Recommendations</h3>
+
+                        <p>
+                            Allow the AI Mentor to provide recommendations based on your profile.
+                        </p>
+
+                    </div>
+
+
+                    <label class="toggle">
+
+                        <input type="checkbox" checked>
+
+                        <span class="toggle-slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= NOTIFICATIONS ================= -->
+
+        <section class="settings-card">
+
+            <div class="section-header">
+
+                <h2>Notifications</h2>
+
+                <p>
+                    Manage the notifications and reminders you receive.
+                </p>
+
+            </div>
+
+
+            <div class="section-body">
+
+
+                <div class="preference-row">
+
+                    <div class="preference-info">
+
+                        <h3>Email Notifications</h3>
+
+                        <p>
+                            Receive important account and system updates.
+                        </p>
+
+                    </div>
+
+
+                    <label class="toggle">
+
+                        <input type="checkbox" checked>
+
+                        <span class="toggle-slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="preference-row">
+
+                    <div class="preference-info">
+
+                        <h3>AI Recommendations</h3>
+
+                        <p>
+                            Receive personalized career and profile recommendations.
+                        </p>
+
+                    </div>
+
+
+                    <label class="toggle">
+
+                        <input type="checkbox" checked>
+
+                        <span class="toggle-slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="preference-row">
+
+                    <div class="preference-info">
+
+                        <h3>Profile Improvement Reminders</h3>
+
+                        <p>
+                            Receive reminders when your profile requires attention.
+                        </p>
+
+                    </div>
+
+
+                    <label class="toggle">
+
+                        <input type="checkbox">
+
+                        <span class="toggle-slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= PRIVACY ================= -->
+
+        <section class="settings-card">
+
+            <div class="section-header">
+
+                <h2>Privacy & Data</h2>
+
+                <p>
+                    Manage your profile connection and data preferences.
+                </p>
+
+            </div>
+
+
+            <div class="section-body">
+
+
+                <div class="connection-box">
+
+                    <div class="connection-info">
+
+                        <div class="linkedin-icon">
+                            in
+                        </div>
+
+                        <div>
+
+                            <h3>LinkedIn url</h3>
+
+                            <p>
+                                LinkedIn profile connection
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <span class="connected">
+                        Connected
+                    </span>
+
+                </div>
+
+
+                <div class="preference-row" style="margin-top: 20px;">
+
+                    <div class="preference-info">
+
+                        <h3>Personalized Data Usage</h3>
+
+                        <p>
+                            Allow your profile information to personalize AI guidance.
+                        </p>
+
+                    </div>
+
+
+                    <label class="toggle">
+
+                        <input type="checkbox" checked>
+
+                        <span class="toggle-slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ACCOUNT ACTIONS ================= -->
+
+        <section class="settings-card">
+
+            <div class="section-header">
+
+                <h2>Account Actions</h2>
+
+                <p>
+                    Manage access to your AI Mentor account.
+                </p>
+
+            </div>
+
+
+            <div class="section-body">
+
+
+                <div class="account-action">
+
+                    <div>
+
+                        <h3>Log Out</h3>
+
+                        <p>
+                            Log out from your current session.
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="index.html"
+                        class="outline-button"
+                        style="text-decoration:none;"
+                    >
+                        Log Out
+                    </a>
+
+                </div>
+
+
+                <div class="account-action">
+
+                    <div>
+
+                        <h3>Delete Account</h3>
+
+                        <p>
+                            Permanently remove your account and associated data.
+                        </p>
+
+                    </div>
+
+
+                    <button class="danger-button">
+                        Delete Account
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</body>
+</html>

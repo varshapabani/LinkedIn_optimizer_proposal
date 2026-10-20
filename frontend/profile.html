@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Your Profile | AI Mentor</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f7f9fc;
+            color: #172033;
+            min-height: 100vh;
+        }
+
+        /* ==============================
+           HEADER
+        ============================== */
+
+        .top-header {
+            height: 72px;
+            background: #0b1f3a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 55px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            background: #2563eb;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .step-count {
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+
+        /* ==============================
+           MAIN CONTAINER
+        ============================== */
+
+        .page-container {
+            width: 100%;
+            max-width: 1050px;
+            margin: 45px auto;
+            padding: 0 25px;
+        }
+
+        .page-heading {
+            margin-bottom: 35px;
+        }
+
+        .page-heading h1 {
+            font-size: 32px;
+            color: #172033;
+            margin-bottom: 10px;
+        }
+
+        .page-heading p {
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.6;
+            max-width: 700px;
+        }
+
+        /* ==============================
+           PROGRESS BAR
+        ============================== */
+
+        .progress-wrapper {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .progress-steps {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .progress-step.active {
+            color: #2563eb;
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .progress-step.active .step-number {
+            background: #2563eb;
+            color: white;
+        }
+
+        .progress-line {
+            flex: 1;
+            height: 2px;
+            background: #e2e8f0;
+            margin: 0 15px;
+        }
+
+        /* ==============================
+           FORM CARD
+        ============================== */
+
+        .form-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 25px;
+        }
+
+        .card-header {
+            margin-bottom: 28px;
+        }
+
+        .card-header h2 {
+            font-size: 21px;
+            color: #172033;
+            margin-bottom: 7px;
+        }
+
+        .card-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        /* ==============================
+           FORM GRID
+        ============================== */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .input-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #172033;
+            margin-bottom: 8px;
+        }
+
+        .required {
+            color: #2563eb;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            border: 1px solid #dbe2ea;
+            border-radius: 9px;
+            padding: 12px 14px;
+            font-size: 14px;
+            color: #172033;
+            outline: none;
+            background: white;
+            transition: 0.2s;
+        }
+
+        .input-group input,
+        .input-group select {
+            height: 48px;
+        }
+
+        .input-group textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+        }
+
+        .input-description {
+            margin-top: 6px;
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        /* ==============================
+           PROFILE PHOTO
+        ============================== */
+
+        .photo-section {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .photo-placeholder {
+            width: 82px;
+            height: 82px;
+            border-radius: 50%;
+            background: #eaf2ff;
+            border: 2px dashed #93b4e8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .photo-info h3 {
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .photo-info p {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .upload-label {
+            display: inline-block;
+            padding: 8px 14px;
+            border: 1px solid #2563eb;
+            border-radius: 7px;
+            color: #2563eb;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .upload-label:hover {
+            background: #eaf2ff;
+        }
+
+        #profile-picture {
+            display: none;
+        }
+
+        /* ==============================
+           SKILLS
+        ============================== */
+
+        .skills-box {
+            border: 1px solid #dbe2ea;
+            border-radius: 9px;
+            padding: 10px;
+            min-height: 48px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .skill-tag {
+            background: #eaf2ff;
+            color: #1d4ed8;
+            padding: 7px 11px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .skills-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 5px;
+            font-size: 13px;
+        }
+
+        /* ==============================
+           CHECKBOX
+        ============================== */
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 5px;
+        }
+
+        .checkbox-group input {
+            width: 16px;
+            height: 16px;
+            accent-color: #2563eb;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        /* ==============================
+           BUTTON
+        ============================== */
+
+        .button-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .continue-button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            padding: 14px 28px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .continue-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+
+        @media (max-width: 700px) {
+
+            .top-header {
+                padding: 0 20px;
+            }
+
+            .page-container {
+                margin-top: 30px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .input-group.full-width {
+                grid-column: auto;
+            }
+
+            .progress-steps {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .progress-line {
+                display: none;
+            }
+
+            .form-card {
+                padding: 25px;
+            }
+
+            .photo-section {
+                align-items: flex-start;
+            }
+        }
+
+        /* ==============================
+   AI ACTIONS
+============================== */
+
+.ai-actions-section {
+    margin-top: 35px;
+}
+
+.ai-actions-section h3 {
+    font-size: 17px;
+    color: #172033;
+    margin-bottom: 7px;
+}
+
+.ai-actions-description {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 18px;
+}
+
+.ai-action-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.ai-action-card {
+    min-height: 135px;
+    background: #f1f4f8;
+    border: 1px solid #e1e6ed;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s;
+    color: #172033;
+}
+
+/* Hover - only while mouse is over the button */
+
+.ai-action-card:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Remove the permanent blue active state */
+
+/* When the button is clicked/focused */
+
+.ai-action-card:focus {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: white;
+    outline: none;
+}
+
+.action-title {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.action-description {
+    display: block;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #64748b;
+}
+
+.ai-action-card:hover .action-description,
+.ai-action-card:focus .action-description {
+    color: #dbeafe;
+}
+
+
+/* Responsive */
+
+@media (max-width: 700px) {
+
+    .ai-action-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ==============================
+         HEADER
+    ============================== -->
+
+    <header class="top-header">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                AI
+            </div>
+
+            <div class="brand-name">
+                AI Mentor for LinkedIn
+            </div>
+
+        </div>
+
+        <div class="step-count">
+            Profile Setup
+        </div>
+
+    </header>
+
+
+    <!-- ==============================
+         MAIN CONTENT
+    ============================== -->
+
+    <main class="page-container">
+
+
+        <div class="page-heading">
+
+            <h1>
+                Create Your Professional Profile
+            </h1>
+
+            <p>
+                Tell us about yourself, your education, professional
+                experience, skills, and career goals. This information
+                will help your AI Mentor provide personalized
+                recommendations.
+            </p>
+
+        </div>
+
+
+        <!-- ==============================
+             PROGRESS
+        ============================== -->
+
+        <div class="progress-wrapper">
+
+            <div class="progress-steps">
+
+                <div class="progress-step active">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <span>
+                        Account
+                    </span>
+
+                </div>
+
+
+                <div class="progress-line"></div>
+
+
+                <div class="progress-step">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <span>
+                        Personal
+                    </span>
+
+                </div>
+
+
+                <div class="progress-line"></div>
+
+
+                <div class="progress-step">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <span>
+                        Education
+                    </span>
+
+                </div>
+
+
+                <div class="progress-line"></div>
+
+
+                <div class="progress-step">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <span>
+                        Professional
+                    </span>
+
+                </div>
+
+
+                <div class="progress-line"></div>
+
+
+                <div class="progress-step">
+
+                    <div class="step-number">
+                        5
+                    </div>
+
+                    <span>
+                        Career
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <form action="dashboard.html">
+
+
+            <!-- ==============================
+                 ACCOUNT INFORMATION
+            ============================== -->
+
+            <section class="form-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Account Information
+                    </h2>
+
+                    <p>
+                        Create your account credentials to get started.
+                    </p>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="input-group">
+
+                        <label for="full-name">
+                            Full Name <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="full-name"
+                            name="full_name"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="email">
+                            Email Address <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="example@email.com"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="contact">
+                            Contact Number <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="contact"
+                            name="contact"
+                            placeholder="+92 300 0000000"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="username">
+                            Create Username <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Choose a username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="password">
+                            Create Password <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Create a secure password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="confirm-password">
+                            Confirm Password <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="password"
+                            id="confirm-password"
+                            name="confirm_password"
+                            placeholder="Re-enter your password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================
+                 PERSONAL INFORMATION
+            ============================== -->
+
+            <section class="form-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Personal Information
+                    </h2>
+
+                    <p>
+                        Help us understand your basic professional profile.
+                    </p>
+
+                </div>
+
+
+                <div class="photo-section">
+
+                    <div class="photo-placeholder">
+                        Profile Photo
+                    </div>
+
+                    <div class="photo-info">
+
+                        <h3>
+                            Profile Picture
+                        </h3>
+
+                        <p>
+                            Upload a professional profile picture.
+                        </p>
+
+                        <label
+                            for="profile-picture"
+                            class="upload-label"
+                        >
+                            Upload Photo
+                        </label>
+
+                        <input
+                            type="file"
+                            id="profile-picture"
+                            accept="image/*"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="input-group">
+
+                        <label for="gender">
+                            Gender <span class="required">*</span>
+                        </label>
+
+                        <select id="gender" name="gender" required>
+
+                            <option value="">
+                                Select gender
+                            </option>
+
+                            <option value="male">
+                                Male
+                            </option>
+
+                            <option value="female">
+                                Female
+                            </option>
+
+                            <option value="other">
+                                Other
+                            </option>
+
+                            <option value="prefer-not">
+                                Prefer not to say
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="age">
+                            Age
+                        </label>
+
+                        <input
+                            type="number"
+                            id="age"
+                            name="age"
+                            placeholder="Enter your age"
+                            min="13"
+                            max="100"
+                        >
+
+                    </div>
+
+
+                    <div class="input-group full-width">
+
+                        <label for="location">
+                            Location
+                        </label>
+
+                        <input
+                            type="text"
+                            id="location"
+                            name="location"
+                            placeholder="City, Country"
+                        >
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================
+                 EDUCATION
+            ============================== -->
+
+            <section class="form-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Education
+                    </h2>
+
+                    <p>
+                        Add your current or most recent educational background.
+                    </p>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="input-group">
+
+                        <label for="education-level">
+                            Education Level <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="education-level"
+                            name="education_level"
+                            required
+                        >
+
+                            <option value="">
+                                Select education level
+                            </option>
+
+                            <option>
+                                School
+                            </option>
+
+                            <option>
+                                College
+                            </option>
+
+                            <option>
+                                Undergraduate
+                            </option>
+
+                            <option>
+                                Graduate
+                            </option>
+
+                            <option>
+                                Postgraduate
+                            </option>
+
+                            <option>
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="degree">
+                            Degree / Program
+                        </label>
+
+                        <input
+                            type="text"
+                            id="degree"
+                            name="degree"
+                            placeholder="e.g. BS Computer Science"
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="university">
+                            University / Institute
+                        </label>
+
+                        <input
+                            type="text"
+                            id="university"
+                            name="university"
+                            placeholder="Enter institution name"
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="graduation-year">
+                            Graduation Year
+                        </label>
+
+                        <input
+                            type="number"
+                            id="graduation-year"
+                            name="graduation_year"
+                            placeholder="e.g. 2027"
+                            min="1950"
+                            max="2100"
+                        >
+
+                    </div>
+
+
+                    <div class="input-group full-width">
+
+                        <div class="checkbox-group">
+
+                            <input
+                                type="checkbox"
+                                id="currently-studying"
+                                name="currently_studying"
+                            >
+
+                            <label for="currently-studying">
+                                I am currently studying
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================
+                 PROFESSIONAL INFORMATION
+            ============================== -->
+
+            <section class="form-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Professional Information
+                    </h2>
+
+                    <p>
+                        Tell us about your current professional status and experience.
+                    </p>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="input-group">
+
+                        <label for="status">
+                            Current Professional Status
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="status"
+                            name="professional_status"
+                            required
+                        >
+
+                            <option value="">
+                                Select your status
+                            </option>
+
+                            <option>
+                                Student
+                            </option>
+
+                            <option>
+                                Employed
+                            </option>
+
+                            <option>
+                                Self-Employed
+                            </option>
+
+                            <option>
+                                Freelancer
+                            </option>
+
+                            <option>
+                                Job Seeker
+                            </option>
+
+                            <option>
+                                Currently Not Working
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="job-title">
+                            Job Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="job-title"
+                            name="job_title"
+                            placeholder="e.g. Web Developer"
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="company">
+                            Company / Organization
+                        </label>
+
+                        <input
+                            type="text"
+                            id="company"
+                            name="company"
+                            placeholder="Enter company name"
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="experience">
+                            Years of Experience
+                        </label>
+
+                        <select
+                            id="experience"
+                            name="experience"
+                        >
+
+                            <option value="">
+                                Select experience
+                            </option>
+
+                            <option>
+                                No experience
+                            </option>
+
+                            <option>
+                                Less than 1 year
+                            </option>
+
+                            <option>
+                                1–2 years
+                            </option>
+
+                            <option>
+                                3–5 years
+                            </option>
+
+                            <option>
+                                5–10 years
+                            </option>
+
+                            <option>
+                                10+ years
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="input-group full-width">
+
+                        <label for="experience-details">
+                            Experience / Projects
+                        </label>
+
+                        <textarea
+                            id="experience-details"
+                            name="experience_details"
+                            placeholder="Describe your work experience, projects, internships, freelance work, or other relevant experience."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================
+                 SKILLS
+            ============================== -->
+
+            <section class="form-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Skills
+                    </h2>
+
+                    <p>
+                        Add the technical and professional skills you currently have.
+                    </p>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="input-group full-width">
+
+                        <label for="skills">
+                            Your Skills <span class="required">*</span>
+                        </label>
+
+                        <div class="skills-box">
+
+                            <div class="skill-tags">
+
+                                <span class="skill-tag">
+                                    Python
+                                </span>
+
+                                <span class="skill-tag">
+                                    HTML
+                                </span>
+
+                                <span class="skill-tag">
+                                    CSS
+                                </span>
+
+                            </div>
+
+                            <input
+                                type="text"
+                                id="skills"
+                                name="skills"
+                                placeholder="Type a skill and press Enter"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="skill-level">
+                            Overall Skill Level
+                        </label>
+
+                        <select
+                            id="skill-level"
+                            name="skill_level"
+                        >
+
+                            <option value="">
+                                Select level
+                            </option>
+
+                            <option>
+                                Beginner
+                            </option>
+
+                            <option>
+                                Intermediate
+                            </option>
+
+                            <option>
+                                Advanced
+                            </option>
+
+                            <option>
+                                Expert
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="interests">
+                            Areas of Interest
+                        </label>
+
+                        <input
+                            type="text"
+                            id="interests"
+                            name="interests"
+                            placeholder="e.g. AI, Web Development, UI/UX"
+                        >
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================
+                 LINKEDIN
+            ============================== -->
+            <!-- ==============================
+     PROFESSIONAL BACKGROUND & AI ACTIONS
+============================== -->
+
+<section class="form-card">
+
+    <div class="card-header">
+
+    <!-- AI Actions -->
+
+    <div class="ai-actions-section">
+
+        <h3>
+            Select AI Action
+        </h3>
+
+        <p class="ai-actions-description">
+            Choose what you want the AI Mentor to generate or optimize.
+        </p>
+
+
+        <div class="ai-action-grid">
+
+
+            <!-- Job Proposal -->
+
+            <button
+                type="button"
+                class="ai-action-card active"
+                onclick="selectAction(this)"
+            >
+
+                <span class="action-title">
+                    Generate Job Proposal
+                </span>
+
+                <span class="action-description">
+                    Create a professional proposal based on your
+                    skills and experience.
+                </span>
+
+            </button>
+
+
+            <!-- Services -->
+
+            <button
+                type="button"
+                class="ai-action-card"
+                onclick="selectAction(this)"
+            >
+
+                <span class="action-title">
+                    Optimize Services
+                </span>
+
+                <span class="action-description">
+                    Improve and present your professional services
+                    more effectively.
+                </span>
+
+            </button>
+
+
+            <!-- Keywords -->
+
+            <button
+                type="button"
+                class="ai-action-card"
+                onclick="selectAction(this)"
+            >
+
+                <span class="action-title">
+                    Optimize Keywords
+                </span>
+
+                <span class="action-description">
+                    Identify relevant professional keywords and
+                    improve your profile positioning.
+                </span>
+
+            </button>
+
+
+            <!-- About Section -->
+
+            <button
+                type="button"
+                class="ai-action-card"
+                onclick="selectAction(this)"
+            >
+
+                <span class="action-title">
+                    Optimize About Section
+                </span>
+
+                <span class="action-description">
+                    Generate a stronger and more professional
+                    personal summary.
+                </span>
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+            <!-- ==============================
+                 CAREER GOALS
+            ============================== -->
+
+            <section class="form-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Career Goals
+                    </h2>
+
+                    <p>
+                        Tell us where you want your career to go.
+                    </p>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="input-group">
+
+                        <label for="career">
+                            Desired Career
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="career"
+                            name="desired_career"
+                            required
+                        >
+
+                            <option value="">
+                                Select career
+                            </option>
+
+                            <option>
+                                Software Developer
+                            </option>
+
+                            <option>
+                                Web Developer
+                            </option>
+
+                            <option>
+                                Frontend Developer
+                            </option>
+
+                            <option>
+                                Backend Developer
+                            </option>
+
+                            <option>
+                                Full Stack Developer
+                            </option>
+
+                            <option>
+                                AI / Machine Learning Engineer
+                            </option>
+
+                            <option>
+                                Data Scientist
+                            </option>
+
+                            <option>
+                                UI/UX Designer
+                            </option>
+
+                            <option>
+                                Cybersecurity Professional
+                            </option>
+
+                            <option>
+                                Cloud Engineer
+                            </option>
+
+                            <option>
+                                Graphic Designer
+                            </option>
+
+                            <option>
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="industry">
+                            Preferred Industry
+                        </label>
+
+                        <select
+                            id="industry"
+                            name="industry"
+                        >
+
+                            <option value="">
+                                Select industry
+                            </option>
+
+                            <option>
+                                Technology
+                            </option>
+
+                            <option>
+                                Software
+                            </option>
+
+                            <option>
+                                Finance
+                            </option>
+
+                            <option>
+                                Healthcare
+                            </option>
+
+                            <option>
+                                Education
+                            </option>
+
+                            <option>
+                                E-Commerce
+                            </option>
+
+                            <option>
+                                Design
+                            </option>
+
+                            <option>
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="input-group full-width">
+
+                        <label for="career-goal">
+                            Career Goal
+                        </label>
+
+                        <textarea
+                            id="career-goal"
+                            name="career_goal"
+                            placeholder="Describe what you want to achieve in your career."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="input-group full-width">
+
+                        <label for="about">
+                            About Yourself
+                        </label>
+
+                        <textarea
+                            id="about"
+                            name="about"
+                            placeholder="Tell your AI Mentor anything else that may help it understand your professional goals."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================
+                 SUBMIT
+            ============================== -->
+
+            <div class="button-section">
+
+                <button
+                    type="submit"
+                    class="continue-button"
+                >
+                    Create Profile & Continue
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </main>
+
+</body>
+
+</html>

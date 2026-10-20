@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | AI Mentor for LinkedIn</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f6f8fc;
+            color: #172033;
+        }
+
+        /* ================= HEADER ================= */
+
+        .topbar {
+            height: 76px;
+            background: #0b1f3a;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 45px;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: #2563eb;
+            border-radius: 9px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        /* ================= NAVIGATION ================= */
+
+        .navigation {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navigation a {
+            color: #dbe5f3;
+            text-decoration: none;
+
+            padding: 11px 14px;
+            border-radius: 8px;
+
+            font-size: 14px;
+            font-weight: 500;
+
+            transition: 0.2s;
+        }
+
+        .navigation a:hover {
+            background: #17365f;
+            color: white;
+        }
+
+        .navigation a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .navigation a.logout {
+            color: #f1b5b5;
+        }
+
+        .navigation a.logout:hover {
+            background: #5a2020;
+            color: white;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            max-width: 1250px;
+            margin: auto;
+            padding: 40px 35px 60px;
+        }
+
+        /* ================= WELCOME ================= */
+
+        .welcome {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+            color: #0b1f3a;
+        }
+
+        .welcome p {
+            color: #697386;
+            font-size: 15px;
+        }
+
+        .profile-mini {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-avatar {
+            width: 45px;
+            height: 45px;
+
+            border-radius: 50%;
+            background: #dbe8ff;
+            color: #2563eb;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+        .profile-mini strong {
+            display: block;
+            color: #172033;
+            font-size: 14px;
+        }
+
+        .profile-mini span {
+            color: #7a8495;
+            font-size: 12px;
+        }
+
+        /* ================= SCORE CARDS ================= */
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+
+            margin-bottom: 25px;
+        }
+
+        .score-card {
+            background: white;
+            border: 1px solid #e6eaf0;
+
+            border-radius: 14px;
+            padding: 24px;
+
+            box-shadow: 0 5px 18px rgba(11, 31, 58, 0.04);
+        }
+
+        .score-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+        .score-card h3 {
+            font-size: 14px;
+            color: #667085;
+            font-weight: 500;
+        }
+
+        .score-number {
+            font-size: 30px;
+            font-weight: 700;
+            color: #0b1f3a;
+        }
+
+        .score-label {
+            color: #7a8495;
+            font-size: 13px;
+        }
+
+        .progress {
+            width: 100%;
+            height: 7px;
+            background: #edf0f5;
+            border-radius: 20px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #2563eb;
+            border-radius: 20px;
+        }
+
+        /* ================= CONTENT GRID ================= */
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 22px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e6eaf0;
+            border-radius: 14px;
+            padding: 25px;
+
+            box-shadow: 0 5px 18px rgba(11, 31, 58, 0.04);
+        }
+
+        .card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .card-title h2 {
+            color: #0b1f3a;
+            font-size: 18px;
+        }
+
+        .card-title a {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* ================= CAREER ================= */
+
+        .career-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            padding: 20px;
+            background: #f7f9fd;
+
+            border-radius: 12px;
+            margin-bottom: 18px;
+        }
+
+        .career-score {
+            width: 80px;
+            height: 80px;
+
+            border-radius: 50%;
+
+            border: 7px solid #2563eb;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            background: white;
+        }
+
+        .career-score strong {
+            font-size: 20px;
+            color: #0b1f3a;
+        }
+
+        .career-score span {
+            font-size: 10px;
+            color: #7a8495;
+        }
+
+        .career-info h3 {
+            font-size: 17px;
+            color: #172033;
+            margin-bottom: 7px;
+        }
+
+        .career-info p {
+            font-size: 13px;
+            color: #697386;
+            line-height: 1.5;
+        }
+
+        /* ================= RECOMMENDATIONS ================= */
+
+        .recommendation {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            padding: 15px 0;
+
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .recommendation:last-child {
+            border-bottom: none;
+        }
+
+        .recommendation-number {
+            width: 34px;
+            height: 34px;
+
+            background: #eaf1ff;
+            color: #2563eb;
+
+            border-radius: 8px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .recommendation h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: #172033;
+        }
+
+        .recommendation p {
+            font-size: 12px;
+            color: #7a8495;
+        }
+
+        /* ================= AI MENTOR ================= */
+
+        .mentor-card {
+            margin-top: 22px;
+
+            background: linear-gradient(
+                135deg,
+                #0b1f3a,
+                #163d6d
+            );
+
+            border-radius: 16px;
+            padding: 30px;
+
+            color: white;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 30px;
+        }
+
+        .mentor-content {
+            max-width: 650px;
+        }
+
+        .mentor-content h2 {
+            font-size: 23px;
+            margin-bottom: 10px;
+        }
+
+        .mentor-content p {
+            color: #d9e4f2;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .mentor-button {
+            display: inline-block;
+
+            background: #2563eb;
+            color: white;
+
+            text-decoration: none;
+
+            padding: 13px 22px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            transition: 0.2s;
+        }
+
+        .mentor-button:hover {
+            background: #1d4ed8;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin-top: 22px;
+
+            background: white;
+            border: 1px solid #e6eaf0;
+
+            border-radius: 12px;
+            padding: 16px 20px;
+        }
+
+        .status-dot {
+            width: 9px;
+            height: 9px;
+            background: #22a06b;
+            border-radius: 50%;
+        }
+
+        .status p {
+            font-size: 13px;
+            color: #667085;
+        }
+
+        .status strong {
+            color: #172033;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1000px) {
+
+            .topbar {
+                padding: 0 25px;
+            }
+
+            .navigation {
+                gap: 2px;
+            }
+
+            .navigation a {
+                padding: 10px 9px;
+                font-size: 13px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .topbar {
+                height: auto;
+                padding: 15px 20px;
+
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .navigation {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .main {
+                padding: 30px 20px;
+            }
+
+            .welcome {
+                align-items: flex-start;
+                gap: 20px;
+                flex-direction: column;
+            }
+
+            .score-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mentor-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .navigation a {
+                font-size: 12px;
+                padding: 8px 7px;
+            }
+
+            .welcome h1 {
+                font-size: 25px;
+            }
+
+            .career-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= TOP NAVIGATION ================= -->
+
+    <header class="topbar">
+
+        <div class="logo">
+            <div class="logo-icon">AI</div>
+            <span>AI Mentor for LinkedIn</span>
+        </div>
+
+        <nav class="navigation">
+
+            <a href="profile.html">
+                My Profile
+            </a>
+
+            <a href="linkedin-analysis.html">
+                LinkedIn Analysis
+            </a>
+
+            <a href="ai-mentor.html" class="active">
+                AI Mentor
+            </a>
+
+            <a href="settings.html">
+                Settings
+            </a>
+
+            <a href="index.html" class="logout">
+                Logout
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main">
+
+        <!-- Welcome -->
+
+        <section class="welcome">
+
+            <div>
+                <h1>Welcome back</h1>
+
+                <p>
+                    Here is a quick overview of your professional progress.
+                </p>
+            </div>
+
+            <div class="profile-mini">
+
+                <div class="profile-avatar">
+                    FZ
+                </div>
+
+                <div>
+                    <strong>Fatima Zehra</strong>
+                    <span>CS & Technology</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= IMPORTANT SCORES ================= -->
+
+        <section class="score-grid">
+
+            <div class="score-card">
+
+                <div class="score-card-header">
+                    <h3>Profile Completion</h3>
+                    <span class="score-number">82%</span>
+                </div>
+
+                <span class="score-label">
+                    Your professional profile
+                </span>
+
+                <div class="progress">
+                    <div class="progress-bar" style="width: 82%;"></div>
+                </div>
+
+            </div>
+
+
+            <div class="score-card">
+
+                <div class="score-card-header">
+                    <h3>LinkedIn Profile</h3>
+                    <span class="score-number">76%</span>
+                </div>
+
+                <span class="score-label">
+                    Current profile strength
+                </span>
+
+                <div class="progress">
+                    <div class="progress-bar" style="width: 76%;"></div>
+                </div>
+
+            </div>
+
+
+            <div class="score-card">
+
+                <div class="score-card-header">
+                    <h3>Career Match</h3>
+                    <span class="score-number">89%</span>
+                </div>
+
+                <span class="score-label">
+                    Based on your current profile
+                </span>
+
+                <div class="progress">
+                    <div class="progress-bar" style="width: 89%;"></div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= MAIN INFORMATION ================= -->
+
+        <section class="content-grid">
+
+
+            <!-- Career Match -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h2>Career Direction</h2>
+
+                    <a href="ai-mentor.html">
+                        Explore
+                    </a>
+
+                </div>
+
+
+                <div class="career-box">
+
+                    <div class="career-score">
+
+                        <strong>89%</strong>
+
+                        <span>Match</span>
+
+                    </div>
+
+
+                    <div class="career-info">
+
+                        <h3>Frontend Developer</h3>
+
+                        <p>
+                            Your current skills and interests show strong
+                            alignment with frontend development.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <p style="font-size:13px; color:#697386;">
+                    Your AI Mentor can help you understand what to learn
+                    next and how to move toward this career.
+                </p>
+
+            </div>
+
+
+            <!-- Recommendations -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h2>Weak Areas To Improve</h2>
+
+                    <a href="ai-mentor.html">
+                        View All
+                    </a>
+
+                </div>
+
+
+                <div class="recommendation">
+
+                    <div class="recommendation-number">
+                        01
+                    </div>
+
+                    <div>
+
+                        <h4>Improve LinkedIn Headline</h4>
+
+                        <p>
+                            Make your professional identity clearer.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="recommendation">
+
+                    <div class="recommendation-number">
+                        02
+                    </div>
+
+                    <div>
+
+                        <h4>Strengthen JavaScript</h4>
+
+                        <p>
+                            Improve an important skill for your career path.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="recommendation">
+
+                    <div class="recommendation-number">
+                        03
+                    </div>
+
+                    <div>
+
+                        <h4>Build Your Portfolio</h4>
+
+                        <p>
+                            Add projects that demonstrate your abilities.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= AI MENTOR ================= -->
+
+        <section class="mentor-card">
+
+            <div class="mentor-content">
+
+                <h2>Your AI Career Mentor</h2>
+
+                <p>
+                    <p>
+    Optimize your LinkedIn profile and create stronger proposals with AI-powered guidance.
+</p>
+                </p>
+
+            </div>
+
+
+            <a href="ai-mentor.html" class="mentor-button">
+                Start AI Mentor
+            </a>
+
+        </section>
+
+
+    </main>
+
+</body>
+</html>
